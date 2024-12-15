@@ -1,48 +1,39 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "sort.h"
+#include <stdio.h>
 
 /**
- * selection_sort - Sorts an array of integers in ascending order.
- * @array: The array of integers to be sorted.
+ * selection_sort - sorts an array of integers in ascending order
+ *                 using the Selection sort algorithm.
+ * @array: The array to sort.
  * @size: The size of the array.
- *
- * Implements the selection sort algorithm, a simple comparison
- *  sorting technique.
- * The algorithm divides the input array into a sorted and an unsorted segment.
- * It repeatedly selects the smallest (or largest) element
- *  from the unsorted segment
- * and moves it to the end of the sorted segment.
- *  The process involves two nestedloops
- * The outer loop traverses from the start of the array, and the
- *  inner loop finds
- * the minimum element in the unsorted part of the array.
- *
- * Return: void
  */
-
 void selection_sort(int *array, size_t size)
 {
-	int temp = 0;
-	size_t current_i;
-	/*Index of the currently found minimum element*/
-	size_t i, j;
+	size_t i, j, min_index;
+	int temp;
 
-	for (i = 0; i < size; i++)
+	if (!array || size < 2)
+		return;
+
+	for (i = 0; i < size - 1; i++)
 	{
-		current_i = i;
+		min_index = i;
 
+		/* Chercher le plus petit élément dans la partie non triée */
 		for (j = i + 1; j < size; j++)
 		{
-			if (array[current_i] > array[j])
-				current_i = j;
+			if (array[j] < array[min_index])
+				min_index = j;
 		}
-		/* swap if smaller elem is found*/
-		if (current_i != i)
+
+		/* Échanger si un nouvel élément plus petit est trouvé */
+		if (min_index != i)
 		{
 			temp = array[i];
-			array[i] = array[current_i];
-			array[current_i] = temp;
+			array[i] = array[min_index];
+			array[min_index] = temp;
+
+			/* Afficher le tableau après chaque échange */
 			print_array(array, size);
 		}
 	}
